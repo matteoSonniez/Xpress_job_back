@@ -2,7 +2,7 @@ const express = require('express')
 const app = express();
 const mongoose = require('mongoose');
 var cors = require('cors')
-//const apiRouter = require('./routes');
+const apiRouter = require('./routes');
 require('dotenv').config();
 
 //mongoDb connect
@@ -15,7 +15,8 @@ mongoose.connect(
 
 //Middlewares & routes
 app.use(cors());
-//app.use("/api/", apiRouter)
+app.use(express.json());
+app.use("/api/", apiRouter)
 
 // start app
 app.listen(process.env.PORT, function () {
