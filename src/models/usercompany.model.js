@@ -2,19 +2,12 @@ const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
 
 const userSchema = mongoose.Schema({
-  firstName: {
+  name: {
     type: String,
     required: true,
     lowercase: true,
     maxLength: 50,
     minLength: 2
-  },
-  lastName: {
-    type: String,
-    lowercase: true,
-    maxLength: 50,
-    minLength: 2,
-    required: true
   },
   email: {
     type: String,
@@ -32,7 +25,7 @@ const userSchema = mongoose.Schema({
   },
   isCompany: {
     type: Boolean,
-    default: false
+    default: true
   },
   password: {
     type: String,
@@ -61,4 +54,4 @@ userSchema.pre('save', function (next) {
 
 })
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('UserCompany', userSchema);
