@@ -9,5 +9,7 @@ router.use("/users", userRoutes);
 router.use("/candidacy", candidacyRoutes);
 router.use("/user", userRouter);
 router.use("/jobs", jobRoutes);
+router.use("/auth", require("./auth.route"));
+
 
 module.exports = router;
