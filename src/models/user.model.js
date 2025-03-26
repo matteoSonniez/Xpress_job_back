@@ -38,6 +38,8 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  candidacy: [{ type: mongoose.Schema.Types.ObjectId, ref: "Candidacy" }], // 👈 Nouveau champ tableau de Users
+  
 },
   {
     timestamps: true
