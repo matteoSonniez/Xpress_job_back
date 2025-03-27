@@ -12,6 +12,7 @@ router.use("/candidacy", candidacyRoutes);
 router.use("/user", userRouter);
 router.use("/rdv", rdvRouter);
 router.use("/jobs", jobRoutes);
+router.use("/auth", require("./auth.route"));
 router.use("/stripe", stripeRoutes);
 
 module.exports = router;
