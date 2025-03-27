@@ -18,7 +18,7 @@ const isOwnerOnly = (model, modelKey) => {
       if (!resource) {
         return res.status(404).json({ message: "Ressource non trouvée" });
       }
-
+      console.log(req.user.id, "test2")
       // ⚠️ On compare l’ID du champ avec celui de l’utilisateur connecté
       if (resource[modelKey].toString() !== req.user.id) {
         return res.status(403).json({ message: "Accès refusé : vous n'êtes pas le propriétaire" });

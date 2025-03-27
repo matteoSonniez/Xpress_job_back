@@ -11,6 +11,7 @@ const verifyToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded,"ajjjj")
     req.user = decoded; // On stocke l'info dans req.user pour l'utiliser après
     next();
   } catch (err) {

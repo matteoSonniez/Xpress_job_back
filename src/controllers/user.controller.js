@@ -5,15 +5,6 @@ const signJwt = require("../utils/signJwt");
 const jwt = require("jsonwebtoken"); // Import de jsonwebtoken
 
 
-exports.createUser = async (req, res) => {
-  try {
-    const newUser = new User(req.body);
-    const saved = await newUser.save();
-    res.status(201).json(saved);
-  } catch (err) {
-    res.status(500).json({ message: "Erreur lors de la création de l'utilisateur", error: err.message });
-  }
-};
 // Fonction pour l'inscription d'un utilisateur
 exports.registerUser = async (req, res) => {
   try {
@@ -43,6 +34,7 @@ exports.registerUser = async (req, res) => {
     let userToken = signJwt({
       id: newUser._id,
       isAdmin: newUser.isAdmin,
+      isCompany: newUser.isCompany
     });
 
     // Retourner le token dans la réponse
@@ -84,6 +76,7 @@ exports.registerUserCompany = async (req, res) => {
     let userToken = signJwt({
       id: newUser._id,
       isAdmin: newUser.isAdmin,
+      isCompany: newUser.isCompany
     });
 
     // Retourner le token dans la réponse
@@ -119,6 +112,7 @@ exports.loginUser = async (req, res) => {
       let userToken = signJwt({
         id: usercompany._id,
         isAdmin: usercompany.isAdmin,
+        isCompany: usercompany.isCompany
       });
 
       return res.send({
@@ -137,6 +131,7 @@ exports.loginUser = async (req, res) => {
       let userToken = signJwt({
         id: user._id,
         isAdmin: user.isAdmin,
+        isCompany: user.isCompany
       });
 
       return res.send({
