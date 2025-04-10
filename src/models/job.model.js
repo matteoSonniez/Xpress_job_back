@@ -6,8 +6,12 @@ const jobSchema = new mongoose.Schema({
   location: { type: String, required: true },
   duration: { type: String, required: true },
 
-  salary: { type: Number }, // € par heure ou jour
-  type: { type: String, enum: ["CDD", "Intérim", "Stage", "Saisonnier", "Autre"], default: "Saisonnier" },
+  salary: { type: Number },
+  type: {
+    type: String,
+    enum: ["CDD", "Intérim", "Stage", "Saisonnier", "Autre"],
+    default: "Saisonnier"
+  },
   startDate: { type: Date },
   endDate: { type: Date },
   requirements: [{ type: String }],
@@ -16,9 +20,14 @@ const jobSchema = new mongoose.Schema({
   accommodation: { type: Boolean, default: false },
   mealsIncluded: { type: Boolean, default: false },
 
+  keywords: [{ type: String, index: true }],
+  tags: [{ type: String, index: true }],
+
   company: { type: mongoose.Schema.Types.ObjectId, ref: "UserCompany", required: true },
   candidacys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Candidacy" }],
-  createdAt: { type: Date, default: Date.now }
-});
 
+  deletedReason: { type: String, default: null }
+}, {
+  timestamps: true // Ajoute createdAt et updatedAt automatiquement
+});
 module.exports = mongoose.model("Job", jobSchema);

@@ -178,3 +178,41 @@ exports.getUser = async (req, res) => {
       .json({ message: "Erreur serveur lors de la récupération des données." });
   }
 };
+const Job = require("../models/job.model"); // 👈 à ajouter en haut si pas déjà fait
+
+// Rechercher des entreprises par nom et inclure leurs offres d'emploi
+exports.searchCompanyByName = async (req, res) => {
+  try {
+    const name = req.query.name;
+    if (!name || name.trim() === "") {
+      return res.status(400).json({ message: "Nom d'entreprise requis." });
+    }
+
+    // Chercher les entreprises par nom (insensible à la casse)
+    const companies = await UserCompany.find({
+      name: { $regex: name, $options: "i" }
+    }).select("-password");
+
+    // Pour chaque entreprise, chercher ses offres d'emploi
+    const resultsWithJobs = await Promise.all(
+      companies.map(async (company) => {
+        const jobs = await Job.find({ company: company._id });
+        return {
+          ...company.toObject(),
+          jobs
+        };
+      })
+    );
+
+    res.status(200).json(resultsWithJobs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Erreur lors de la recherche d'entreprise.",
+      error: error.message,
+    });
+  }
+};
+
+
+

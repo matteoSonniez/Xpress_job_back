@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user.controller');
 
-
-
+router.get("/search-company", userController.searchCompanyByName);
 router.get("/get-user", userController.getUser);
 router.post("/register", userController.registerUser);
 router.post("/register-company", userController.registerUserCompany);
